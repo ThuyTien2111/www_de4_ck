@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Danh sách sản phẩm</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Tên sản phẩm</th>
+            <th>Đơn giá</th>
+            <th>Loại sản phẩm</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="s:${sps}">
+            <td th:text="${s.getTen_sp()}"></td>
+            <td th:text="${#strings.toString(s.getDon_gia())}"></td>
+            <td th:text="${s.getLoaiSP().getTen_loai()}"></td>
+            <td>
+                <a class="btn btn-danger" th:href="@{'/update/'+${s.getSp_id()}}">Sửa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" th:href="@{/add}">Thêm sản phẩm</a>
+    <div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li th:each="i:${#numbers.sequence(0, totalSP - 1)}"
+                th:class="${currentPage==i}? 'page-item active':'page-item' ">
+<!--                   khong duoc thieu dau + truoc $ -->
+                    <a class="page-link" th:href="@{'/sp'+'?page='+${i}+'&size='+${pageSize}}"
+                    th:text="${i + 1}"></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
